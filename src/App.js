@@ -1,11 +1,12 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import Greeting from './components/Greeting';
+import AuthFormInhanced from './components/auth/AuthForm';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Greeting />} />
+      <Route path="/login" element={<AuthFormInhanced />} />
+      <Route path="/signup" element={<AuthFormInhanced />} />
     </Routes>
   );
 }

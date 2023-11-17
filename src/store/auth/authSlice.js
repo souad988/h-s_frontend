@@ -52,21 +52,21 @@ export const fetchSignup = createAsyncThunk(
 );
 
 export const fetchLogout = createAsyncThunk(
-    'auth/fetchLogout',
-    async (data, thunkAPI) => {
-        try {
-        const res = await axios.delete(LOGOUT_URL, { user: data }, {
-            headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${data.token}`,
-            },
-        });
-        return res.data;
-        } catch (err) {
-        return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
-        }
-    },
-    );
+  'auth/fetchLogout',
+  async (data, thunkAPI) => {
+    try {
+      const res = await axios.delete(LOGOUT_URL, { user: data }, {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+    }
+  },
+);
 
 const authSlice = createSlice({
   name: 'authSlice',
@@ -91,7 +91,7 @@ const authSlice = createSlice({
         ...state,
         isLoading: true,
       }))
-      .addCase(fetchSignup.fulfilled, (state, { payload }) => {
+      .addCase(fetchLogout.fulfilled, (state) => {
         const data = {
           token: '',
           user: {},
@@ -107,12 +107,12 @@ const authSlice = createSlice({
           message: 'LogedOut Successfully',
         });
       })
-      .addCase(fetchSignup.rejected, (state, { payload }) => ({
+      .addCase(fetchLogout.rejected, (state, { payload }) => ({
         ...state,
         isLoading: false,
         message: payload,
-      }));
-        // Login
+      }))
+      // Login
       .addCase(fetchLogin.pending, (state) => ({
         ...state,
         isLoading: true,
@@ -138,7 +138,6 @@ const authSlice = createSlice({
         isLoading: false,
         message: payload,
       }))
-
       // Sign up
       .addCase(fetchSignup.pending, (state) => ({
         ...state,
