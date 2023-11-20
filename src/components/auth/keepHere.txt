@@ -47,3 +47,64 @@
           </Form>
         )}
       </Formik>
+
+
+ <form onSubmit={handleSubmit}>
+        {title === 'Register'
+          ? (
+            <div className="input_block">
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your username"
+                value={values.name}
+                onChange={handleChange}
+              />
+              {errors.name && touched.name && <div id="error_message">{errors.name}</div>}
+            </div>
+          )
+          : null}
+        <div className="input_block">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email address"
+            value={values.email}
+            onChange={handleChange}
+          />
+          {errors.email && touched.email && <div id="feedback">{errors.email}</div>}
+        </div>
+        <div className="input_block">
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={values.password}
+            onChange={handleChange}
+          />
+          {errors.password && touched.password && <div id="feedback">{errors.password}</div>}
+        </div>
+        {title === 'Register'
+          ? (
+            <div className="input_block">
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                value={values.confirmPassword}
+                onChange={handleChange}
+              />
+              {errors.confirmPassword && touched.confirmPassword && <div id="feedback">{errors.confirmPassword}</div>}
+            </div>
+          )
+          : null}
+        <div className="input_block">
+          <button type="submit">
+            {
+            title === 'Register' ? 'Register' : 'Login'
+          }
+          </button>
+        </div>
+
+        <Link to={title === 'Register' ? '/login' : '/signup'}>{title === 'Register' ? 'Login' : 'Register'}</Link>
+      </form>
