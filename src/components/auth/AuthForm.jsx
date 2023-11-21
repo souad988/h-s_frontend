@@ -19,19 +19,35 @@ const AuthForm = (props) => {
     handleBlur,
   } = props;
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state);
+  const { user, token, message } = useSelector((state) => state.auth);
   const location = useLocation();
   const [title, setTitle] = useState(location.pathname === '/login' ? 'Login' : 'Register');
   useEffect(() => {
     setTitle(location.pathname === '/login' ? 'Login' : 'Register');
   }, [location.pathname]);
-  const handleSubmit = (values) => {
-    console.log(values, auth);
+  useEffect(() => {
+    console.log('message', message);
+    //console.log('props', props);
+  }, [message]);
+  //console.log('props', props);
+  const handleSubmit = (values, e) => {
+    e.preventDefault();
+    //console.log('handleSubmit');
+    console.log('values, user, token, message => ', values, user, token, message);
     if (title === 'Register') {
-      dispatch(fetchSignup({ user: values }));
+      delete values.confirmPassword;
+      dispatch(fetchSignup(values));
     } else {
-      dispatch(fetchLogin({ user: values }));
+      delete values.name;
+      delete values.confirmPassword;
+      dispatch(fetchLogin(values));
     }
+  };
+  const isDisabled = () => {
+    if (title === 'Register') {
+      return Object.keys(values).length < 4 || Object.keys(errors).length > 0;
+    }
+    return !values.email || !values.password || Object.keys(errors).length > 0;
   };
 
   return (
@@ -53,9 +69,10 @@ const AuthForm = (props) => {
             {title === 'Register' ? 'Sign Up' : 'Sign In'}
           </Typography>
         </Box>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={(e) => handleSubmit(values, e)} sx={{ mt: 1 }}>
           {title === 'Register' ? (
             <Box>
+              { message && <div id="name_error_message" className="error_message">{message}</div>}
               <TextField
                 margin="normal"
                 required
@@ -120,6 +137,7 @@ const AuthForm = (props) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isDisabled()}
           >
             { title === 'Register' ? 'Sign Up' : 'Sign In'}
           </Button>
@@ -134,12 +152,12 @@ const AuthForm = (props) => {
           )
             : (
               <Grid container>
-                <Grid item>
+                <Grid item xs='12'>
                   <MuiLink href="#" variant="body2">
                     Forgot password?
                   </MuiLink>
                 </Grid>
-                <Grid item>
+                <Grid item xs='12'>
                   <MuiLink href="/signup" variant="body2">
                     Dont have an account? Sign Up
                   </MuiLink>
@@ -190,7 +208,7 @@ const AuthFormInhanced = withFormik({
   }),
 
   // Custom sync validation
-  validate: (values) => {
+  validate: (values, {title}) => {
     const errors = {};
     if (!values.email) {
       errors.email = 'Required';
@@ -202,10 +220,10 @@ const AuthFormInhanced = withFormik({
     if (!values.password) {
       errors.password = 'Required';
     }
-    if (!values.confirmPassword) {
+    if (title === 'Register' && !values.confirmPassword) {
       errors.confirmPassword = 'Required';
     }
-    if (values.password !== values.confirmPassword) {
+    if (title === 'Register' && values.password !== values.confirmPassword) {
       errors.confirmPassword = 'Password mismatch';
     }
     return errors;

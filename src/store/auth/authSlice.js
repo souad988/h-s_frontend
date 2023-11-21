@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const backendURL = process.env.REACT_APP_BACKEND_API_URL;
+const backendURL = 'http://localhost:3001';
+console.log('backendURL', backendURL);
 const LOGIN_URL = `${backendURL}/login`;
 const SIGNUP_URL = `${backendURL}/signup`;
 const LOGOUT_URL = `${backendURL}/logout`;
@@ -20,13 +21,18 @@ export const fetchLogin = createAsyncThunk(
   'auth/fetchLogin',
   async (loginData, thunkAPI) => {
     try {
-      const res = await axios.post(LOGIN_URL, loginData, {
+      const res = await axios.post(LOGIN_URL, { user: loginData }, {
         headers: {
           'content-type': 'application/json',
         },
       });
+      const { token } = res.data.status.data;
 
-      return res.data;
+      if (token) {
+        console.log('Token:', token);
+        // You can save or use the token here (e.g., store in Redux state)
+      }
+      return res.data.status.data;
     } catch (err) {
       console.log('login error', err.response.data.error);
       return thunkAPI.rejectWithValue('Login failed');
@@ -38,15 +44,17 @@ export const fetchSignup = createAsyncThunk(
   'auth/fetchSignup',
   async (data, thunkAPI) => {
     try {
+      console.log('signup url', SIGNUP_URL);
       const res = await axios.post(SIGNUP_URL, { user: data }, {
         headers: {
           'content-type': 'application/json',
         },
       });
-
+      console.log('signup res', res.data);
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+      console.log('signup error', err.response.data.error, err.response.data, err);
+      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error.message}`);
     }
   },
 );
@@ -149,7 +157,7 @@ const authSlice = createSlice({
           user: payload.user,
         };
 
-        localStorage.setItem('ebikeData', JSON.stringify(data));
+        localStorage.setItem('authData', JSON.stringify(data));
         return ({
           ...state,
           isLoading: false,
