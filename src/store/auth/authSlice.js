@@ -34,8 +34,8 @@ export const fetchLogin = createAsyncThunk(
       }
       return res.data.status.data;
     } catch (err) {
-      console.log('login error', err.response.data.error);
-      return thunkAPI.rejectWithValue('Login failed');
+      console.log('login error', err.response.data);
+      return thunkAPI.rejectWithValue(`Failed: ${err.response.data}`);
     }
   },
 );
@@ -144,6 +144,7 @@ const authSlice = createSlice({
       .addCase(fetchLogin.rejected, (state, { payload }) => ({
         ...state,
         isLoading: false,
+        isLogedin: false,
         message: payload,
       }))
       // Sign up
@@ -164,13 +165,14 @@ const authSlice = createSlice({
           token: payload.token,
           user: payload.user,
           isLogedIn: true,
-          message: 'Successfully Sign up & Login',
+          message: 'Successfully Signed up & Logedin',
         });
       })
       .addCase(fetchSignup.rejected, (state, { payload }) => ({
         ...state,
         isLoading: false,
         message: payload,
+        isLogedin: false,
       }));
   },
 });
