@@ -6,7 +6,7 @@ import {
   Box, Typography, Container, CssBaseline, Avatar, TextField, Button, Grid, Link as MuiLink,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { fetchLogin } from '../../store/auth/authSlice';
+import { fetchLogin, fetchResendConfirmation } from '../../store/auth/authSlice';
 import '../../styles/index.css';
 import { customHandleChange } from './authform';
 
@@ -16,16 +16,22 @@ const Login = (props) => {
     touched,
     errors,
     handleBlur,
+    confirmation,
   } = props;
   const dispatch = useDispatch();
   const {
-    message, isLogedin,
+    message, isLogedin, confirmed, user,
   } = useSelector((state) => state.auth);
-  console.log('props ===> ', props);
+  //console.log('props ===> ', props);
+  console.log('message and confirmed ===> ', message, confirmed);
   const handleSubmit = (values, e) => {
     e.preventDefault();
     dispatch(fetchLogin({ email: values.email, password: values.password }));
   };
+  const resendConfirmation = () => {
+    dispatch(fetchResendConfirmation({ email: user.email }));
+  };
+
   const isDisabled = () => !values.email || !values.password || Object.keys(errors).length > 0;
 
   useEffect(() => {
@@ -50,6 +56,7 @@ const Login = (props) => {
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
+          { confirmation && confirmation.length > 0 && <div className="error_message">{confirmation}</div>}
           { message && !isLogedin && <div className="error_message">{message}</div>}
         </Box>
         <Box component="form" onSubmit={(e) => handleSubmit(values, e)} sx={{ mt: 1 }}>
@@ -102,6 +109,15 @@ const Login = (props) => {
               </MuiLink>
             </Grid>
           </Grid>
+          { !confirmed && (
+          <Grid container>
+            <Grid item xs="12">
+              <MuiLink href="#" variant="body2" onClick={() => resendConfirmation()}>
+                Didnt receive confirmation email? Resend now
+              </MuiLink>
+            </Grid>
+          </Grid>
+          )}
         </Box>
       </Container>
     </div>
@@ -109,6 +125,7 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
+  confirmation: PropTypes.string.isRequired,
   values: PropTypes.shape({
     email: PropTypes.string,
     password: PropTypes.string,

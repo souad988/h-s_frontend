@@ -6,6 +6,7 @@ console.log('backendURL', backendURL);
 const LOGIN_URL = `${backendURL}/login`;
 const SIGNUP_URL = `${backendURL}/signup`;
 const LOGOUT_URL = `${backendURL}/logout`;
+const RESEND_CONFIRMATION_URL = `${backendURL}/confirmation/resend`;
 
 const localData = JSON.parse(localStorage.getItem('authData'));
 
@@ -15,6 +16,7 @@ const initialState = {
   token: localData ? localData.token : '',
   message: '',
   isLogedin: !!localData,
+  confirmed: localData ? localData.confirmed : true,
 };
 
 export const fetchLogin = createAsyncThunk(
@@ -67,6 +69,22 @@ export const fetchLogout = createAsyncThunk(
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${data.token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+    }
+  },
+);
+
+export const fetchResendConfirmation = createAsyncThunk(
+  'auth/resendConfirmation',
+  async (data, thunkAPI) => {
+    try {
+      const res = await axios.delete(RESEND_CONFIRMATION_URL, { email: data }, {
+        headers: {
+          'content-type': 'application/json',
         },
       });
       return res.data;
@@ -139,6 +157,7 @@ const authSlice = createSlice({
           user: payload.user,
           isLogedin: true,
           message: 'LogedIn Successfully',
+          confirmed: data.user.confirmed,
         });
       })
       .addCase(fetchLogin.rejected, (state, { payload }) => ({
@@ -154,21 +173,39 @@ const authSlice = createSlice({
       }))
       .addCase(fetchSignup.fulfilled, (state, { payload }) => {
         const data = {
-          token: payload.token,
-          user: payload.user,
+          user: { email: payload.email },
+          confirmed: payload.data.confirmed,
         };
 
         localStorage.setItem('authData', JSON.stringify(data));
         return ({
           ...state,
           isLoading: false,
-          token: payload.token,
-          user: payload.user,
+          token: '',
+          user: data.user,
           isLogedIn: true,
           message: 'Successfully Signed up & Logedin',
+          confirmed: payload.data.confirmed,
         });
       })
       .addCase(fetchSignup.rejected, (state, { payload }) => ({
+        ...state,
+        isLoading: false,
+        message: payload,
+        isLogedin: false,
+      }))
+      // resend confirmation
+      .addCase(fetchResendConfirmation.pending, (state) => ({
+        ...state,
+        isLoading: true,
+      }))
+      .addCase(fetchResendConfirmation.fulfilled, (state) => ({
+        ...state,
+        isLoading: false,
+        isLogedIn: false,
+        message: 'Confirmation email sent Please check your email',
+      }))
+      .addCase(fetchResendConfirmation.rejected, (state, { payload }) => ({
         ...state,
         isLoading: false,
         message: payload,
