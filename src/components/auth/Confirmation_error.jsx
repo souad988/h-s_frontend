@@ -8,22 +8,22 @@ function ConfirmationError() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { confirmation, isLoading, message } = useSelector((state) => state.auth);
-  console.log('confirmation ===> ', confirmation, isLoading);
+  console.log('confirmation ===> ', confirmation, isLoading, id);
   const resendConfirmation = () => {
-    dispatch(fetchResendConfirmation({ email: id }));
+    dispatch(fetchResendConfirmation(id));
   };
 
   return (
     <div>
-      <Typography component="h1" variant="h5">
-        {' '}
-        { message }
-        {' '}
-      </Typography>
       <Grid container>
+      <Grid item xs="12">
+          <Typography component="h1" variant="h5">
+            the token in the email you used is expired or invalid!
+          </Typography>
+        </Grid>
         <Grid item xs="12">
           <MuiLink href="#" variant="body2" onClick={() => resendConfirmation()}>
-            Didnt receive confirmation email? Click to resend now
+            Click to resend a new confirmation email now!
           </MuiLink>
         </Grid>
       </Grid>

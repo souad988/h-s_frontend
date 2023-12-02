@@ -36,8 +36,8 @@ export const fetchLogin = createAsyncThunk(
       }
       return res.data.status.data;
     } catch (err) {
-      console.log('login error', err.response.data);
-      return thunkAPI.rejectWithValue(`Failed: ${err.response.data}`);
+      console.log('login error', err, err.response.data);
+      return thunkAPI.rejectWithValue(`${err.response.data}`);
     }
   },
 );
@@ -82,7 +82,7 @@ export const fetchResendConfirmation = createAsyncThunk(
   'auth/resendConfirmation',
   async (data, thunkAPI) => {
     try {
-      const res = await axios.delete(RESEND_CONFIRMATION_URL, { email: data }, {
+      const res = await axios.get(`${RESEND_CONFIRMATION_URL}?email=${data}`, {
         headers: {
           'content-type': 'application/json',
         },
@@ -164,6 +164,7 @@ const authSlice = createSlice({
         ...state,
         isLoading: false,
         isLogedin: false,
+        confirmed: payload !== 'You have to confirm your email address before continuing.',
         message: payload,
       }))
       // Sign up

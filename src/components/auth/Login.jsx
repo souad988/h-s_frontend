@@ -29,7 +29,7 @@ const Login = (props) => {
     dispatch(fetchLogin({ email: values.email, password: values.password }));
   };
   const resendConfirmation = () => {
-    dispatch(fetchResendConfirmation({ email: user.email }));
+    dispatch(fetchResendConfirmation(user.email ? user.email : values.email));
   };
 
   const isDisabled = () => !values.email || !values.password || Object.keys(errors).length > 0;
