@@ -22,7 +22,6 @@ const Login = (props) => {
   const {
     message, isLogedin, confirmed, user,
   } = useSelector((state) => state.auth);
-  //console.log('props ===> ', props);
   console.log('message and confirmed ===> ', message, confirmed);
   const handleSubmit = (values, e) => {
     e.preventDefault();
@@ -57,7 +56,7 @@ const Login = (props) => {
             Sign In
           </Typography>
           { confirmation && confirmation.length > 0 && <div className="error_message">{confirmation}</div>}
-          { message && !isLogedin && <div className="error_message">{message}</div>}
+          { message && !isLogedin ? <div className="error_message">{message}</div> : <div className="fulfilled_message">{message}</div>}
         </Box>
         <Box component="form" onSubmit={(e) => handleSubmit(values, e)} sx={{ mt: 1 }}>
           <TextField
