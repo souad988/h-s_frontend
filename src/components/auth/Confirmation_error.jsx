@@ -7,7 +7,7 @@ import { fetchResendConfirmation } from '../../store/auth/authSlice';
 function ConfirmationError() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { confirmation, isLoading, message } = useSelector((state) => state.auth);
+  const { confirmation, isLoading } = useSelector((state) => state.auth);
   console.log('confirmation ===> ', confirmation, isLoading, id);
   const resendConfirmation = () => {
     dispatch(fetchResendConfirmation(id));
