@@ -7,13 +7,13 @@ import ResetPasswordLink from './components/auth/resetPasswordLink';
 
 const App = () => (
   <Routes>
-    <Route path="/" element={<LoginForm confirmation="" />} />
     <Route path="/login" element={<LoginForm confirmation="" />} />
     <Route path="/resetPassword" element={<ResetPasswordLink />} />
     <Route path="/signup" element={<SignUpForm />} />
     <Route path="/confirmation_error/:id" element={<ConfirmationError />} />
     <Route path="/confirmation_success" element={<LoginForm confirmation="confirmation_success" />} />
     <Route path="/confirmation_sent" element={<LoginForm confirmation="confirmation_sent" />} />
+    <Route path="/" element={<LoginForm confirmation="" />} />
   </Routes>
 );
 
