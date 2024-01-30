@@ -2,7 +2,8 @@
     "env": {
       "browser": true,
       "es6": true,
-      "jest": true
+      "jest": true,
+      "node": true
     },
     "parser": "@babel/eslint-parser",
     "parserOptions": {
@@ -12,7 +13,7 @@
       "ecmaVersion": 2018,
       "sourceType": "module"
     },
-    "extends": ["airbnb", "plugin:react/recommended", "plugin:react-hooks/recommended"],
+    "extends": ["airbnb", "plugin:react/recommended", "plugin:react-hooks/recommended", "eslint:recommended"],
     "plugins": ["react"],
     "rules": {
       "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
@@ -31,5 +32,10 @@
     "ignorePatterns": [
       "dist/",
       "build/"
-    ]
+    ],
+    "settings": {
+      "react": {
+        "version": "detect" // Ensures ESLint detects the installed version of React
+      }
+    }
   }
