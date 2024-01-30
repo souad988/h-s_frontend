@@ -13,7 +13,7 @@ const App = () => (
     <Route path="/confirmation_error/:id" element={<ConfirmationError />} />
     <Route path="/confirmation_success" element={<LoginForm confirmation="confirmation_success" />} />
     <Route path="/confirmation_sent" element={<LoginForm confirmation="confirmation_sent" />} />
-    <Route path="/" element={<LoginForm confirmation="" />} />
+    <Route path="/" element={<LoginForm confirmation="" />} exact />
   </Routes>
 );
 
