@@ -16,7 +16,7 @@ function ConfirmationError() {
   return (
     <div>
       <Grid container>
-      <Grid item xs="12">
+        <Grid item xs="12">
           <Typography component="h1" variant="h5">
             the token in the email you used is expired or invalid!
           </Typography>

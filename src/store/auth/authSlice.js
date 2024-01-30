@@ -7,6 +7,7 @@ const LOGIN_URL = `${backendURL}/login`;
 const SIGNUP_URL = `${backendURL}/signup`;
 const LOGOUT_URL = `${backendURL}/logout`;
 const RESEND_CONFIRMATION_URL = `${backendURL}/confirmation/resend`;
+const RESETPASSWORDLINK_URL = `${backendURL}/resetPassword`;
 
 const localData = JSON.parse(localStorage.getItem('authData'));
 
@@ -28,15 +29,8 @@ export const fetchLogin = createAsyncThunk(
           'content-type': 'application/json',
         },
       });
-      const { token } = res.data.status.data;
-
-      if (token) {
-        console.log('Token:', token);
-        // You can save or use the token here (e.g., store in Redux state)
-      }
       return res.data.status.data;
     } catch (err) {
-      console.log('login error', err, err.response.data);
       return thunkAPI.rejectWithValue(`${err.response.data}`);
     }
   },
@@ -46,16 +40,13 @@ export const fetchSignup = createAsyncThunk(
   'auth/fetchSignup',
   async (data, thunkAPI) => {
     try {
-      console.log('signup url', SIGNUP_URL);
       const res = await axios.post(SIGNUP_URL, { user: data }, {
         headers: {
           'content-type': 'application/json',
         },
       });
-      console.log('signup res', res.data);
       return res.data;
     } catch (err) {
-      console.log('signup error', err.response.data.error, err.response.data, err);
       return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error.message}`);
     }
   },
@@ -83,6 +74,22 @@ export const fetchResendConfirmation = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await axios.get(`${RESEND_CONFIRMATION_URL}?email=${data}`, {
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+    }
+  },
+);
+
+export const fetchResetPasswordLink = createAsyncThunk(
+  'auth/resetPasswordLink',
+  async (data, thunkAPI) => {
+    try {
+      const res = await axios.post(RESETPASSWORDLINK_URL, { email: data }, {
         headers: {
           'content-type': 'application/json',
         },
@@ -207,6 +214,23 @@ const authSlice = createSlice({
         message: 'Confirmation email sent Please check your email',
       }))
       .addCase(fetchResendConfirmation.rejected, (state, { payload }) => ({
+        ...state,
+        isLoading: false,
+        message: payload,
+        isLogedin: false,
+      }))
+      // send ResetPasswordLink
+      .addCase(fetchResetPasswordLink.pending, (state) => ({
+        ...state,
+        isLoading: true,
+      }))
+      .addCase(fetchResetPasswordLink.fulfilled, (state) => ({
+        ...state,
+        isLoading: false,
+        isLogedIn: false,
+        message: 'Reset password link was sent Please check your email',
+      }))
+      .addCase(fetchResetPasswordLink.rejected, (state, { payload }) => ({
         ...state,
         isLoading: false,
         message: payload,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
@@ -6,11 +6,11 @@ import {
   Box, Typography, Container, CssBaseline, Avatar, TextField, Button, Grid, Link as MuiLink,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { fetchLogin, fetchResendConfirmation } from '../../store/auth/authSlice';
+import { fetchResetPasswordLink } from '../../store/auth/authSlice';
 import '../../styles/index.css';
 import { customHandleChange } from './authform';
 
-const Login = (props) => {
+const ResetPasswordLinkForm = (props) => {
   const {
     values,
     touched,
@@ -20,22 +20,16 @@ const Login = (props) => {
   } = props;
   const dispatch = useDispatch();
   const {
-    message, isLogedin, confirmed, user,
+    message, isLogedin, confirmed,
   } = useSelector((state) => state.auth);
-  console.log('message and confirmed ===> ', message, confirmed);
+  console.log('reset password ===> ', message, confirmed);
+
   const handleSubmit = (values, e) => {
     e.preventDefault();
-    dispatch(fetchLogin({ email: values.email, password: values.password }));
-  };
-  const resendConfirmation = () => {
-    dispatch(fetchResendConfirmation(user.email ? user.email : values.email));
+    dispatch(fetchResetPasswordLink(values.email));
   };
 
-  const isDisabled = () => !values.email || !values.password || Object.keys(errors).length > 0;
-
-  useEffect(() => {
-    console.log('message changed here ===> ', message);
-  }, [message]);
+  const isDisabled = () => !values.email || Object.keys(errors).length > 0;
 
   return (
     <div>
@@ -53,12 +47,13 @@ const Login = (props) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign In
+            Forgot Password
           </Typography>
           { confirmation && confirmation.length > 0 && <div className="error_message">{confirmation}</div>}
           { message && !isLogedin ? <div className="error_message">{message}</div> : <div className="fulfilled_message">{message}</div>}
         </Box>
         <Box component="form" onSubmit={(e) => handleSubmit(values, e)} sx={{ mt: 1 }}>
+          <Typography variant="body">Lost your password? Please enter your email address. You will receive a link to create a new password via email.</Typography>
           <TextField
             margin="normal"
             required
@@ -73,20 +68,6 @@ const Login = (props) => {
             autoFocus
           />
           {errors.email && touched.email && <div className="error_message">{errors.email}</div>}
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={values.password}
-            onBlur={handleBlur}
-            onChange={(e) => customHandleChange(e, props)}
-          />
-          {errors.password && touched.password && <div className="error_message">{errors.password}</div>}
           <Button
             type="submit"
             fullWidth
@@ -94,12 +75,12 @@ const Login = (props) => {
             sx={{ mt: 3, mb: 2 }}
             disabled={isDisabled()}
           >
-            Sign In
+            Reset Password
           </Button>
           <Grid container>
             <Grid item xs="12">
-              <MuiLink href="/resetPassword" variant="body2">
-                Forgot password?
+              <MuiLink href="/login" variant="body2">
+                Sign In
               </MuiLink>
             </Grid>
             <Grid item xs="12">
@@ -108,50 +89,35 @@ const Login = (props) => {
               </MuiLink>
             </Grid>
           </Grid>
-          { !confirmed && (
-          <Grid container>
-            <Grid item xs="12">
-              <MuiLink href="#" variant="body2" onClick={() => resendConfirmation()}>
-                Didnt receive confirmation email? Resend now
-              </MuiLink>
-            </Grid>
-          </Grid>
-          )}
         </Box>
       </Container>
     </div>
   );
 };
 
-Login.propTypes = {
+ResetPasswordLinkForm.propTypes = {
   confirmation: PropTypes.string.isRequired,
   values: PropTypes.shape({
     email: PropTypes.string,
-    password: PropTypes.string,
     // Define the expected types for each property in the 'values' object
     // These should align with the actual data structure in your application
   }).isRequired,
   touched: PropTypes.shape({
     email: PropTypes.bool,
-    password: PropTypes.bool,
     // Define the expected types for each property in the 'touched' object
     // These should align with the actual data structure in your application
   }).isRequired,
   errors: PropTypes.shape({
     email: PropTypes.string,
-    password: PropTypes.string,
     // Define the expected types for each property in the 'errors' object
     // These should align with the actual data structure in your application
   }).isRequired,
   handleBlur: PropTypes.func.isRequired,
 };
 
-const LoginForm = withFormik({
+const ResetPasswordLink = withFormik({
   mapPropsToValues: () => ({
-    name: '',
     email: '',
-    password: '',
-    confirmPassword: '',
   }),
   handleChange: (e, { props }) => customHandleChange(e, props),
   // Custom sync validation
@@ -164,12 +130,9 @@ const LoginForm = withFormik({
     ) {
       errors.email = 'Invalid email address';
     }
-    if (!values.password) {
-      errors.password = 'Required';
-    }
     return errors;
   },
   displayName: 'BasicForm',
-})(Login);
+})(ResetPasswordLinkForm);
 
-export default LoginForm;
+export default ResetPasswordLink;
