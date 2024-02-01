@@ -102,7 +102,7 @@ const SignUp = (props) => {
               required
               fullWidth
               id="confirmPassword"
-              label="User Name"
+              label="onfirmPassword"
               name="confirmPassword"
               autoComplete="confirmPassword"
               value={values.confirmPassword}

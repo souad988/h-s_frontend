@@ -31,7 +31,7 @@ export const fetchLogin = createAsyncThunk(
       });
       return res.data.status.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(`${err.response.data}`);
+      return thunkAPI.rejectWithValue(`${err.response ? err.response.data : err.message}`);
     }
   },
 );
@@ -47,7 +47,7 @@ export const fetchSignup = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error.message}`);
+      return thunkAPI.rejectWithValue(`Failed: ${err.response ? err.response.data.error.message : err.message}`);
     }
   },
 );
@@ -64,7 +64,7 @@ export const fetchLogout = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+      return thunkAPI.rejectWithValue(`Failed: ${err.response ? err.response.data.error : err.message}`);
     }
   },
 );
@@ -80,7 +80,7 @@ export const fetchResendConfirmation = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+      return thunkAPI.rejectWithValue(`Failed: ${err.response ? err.response.data.error : err.message}`);
     }
   },
 );
@@ -96,7 +96,7 @@ export const fetchResetPasswordLink = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(`Failed: ${err.response.data.error}`);
+      return thunkAPI.rejectWithValue(`Failed: ${err.response ? err.response.data.error : err.message}`);
     }
   },
 );
