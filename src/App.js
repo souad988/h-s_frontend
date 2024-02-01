@@ -7,7 +7,7 @@ import { ColorModeContext, useMode } from "./theme";
 // import ConfirmationError from "./components/auth/Confirmation_error";
 // import ResetPasswordLink from "./components/auth/resetPasswordLink";
 import Header1 from "./components/header/Header1";
-// import { Diversity1 } from "@mui/icons-material";
+import Header2 from "./components/header/Header2";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -17,6 +17,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Header1 />
+        <Header2 />
       </ThemeProvider>
     </ColorModeContext.Provider>
 

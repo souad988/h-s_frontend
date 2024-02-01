@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { ColorModeContext } from "../../theme";
 import {
   Box,
   Container,
@@ -21,6 +20,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import { ColorModeContext } from "../../theme";
 
 const options = ["AR", "EN"];
 
@@ -46,14 +46,14 @@ const Header1 = () => {
   return (
     <Box
       sx={{
-        bgcolor: "#2B3445",
+        bgcolor: "#252b32",
         py: "4px",
         borderBottomRightRadius: 4,
         borderBottomLeftRadius: 4,
       }}
     >
       <Container>
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction="row" alignItems="center">
           <Typography
             sx={{
               mr: 2,
