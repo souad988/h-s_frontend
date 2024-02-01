@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const backendURL = 'http://localhost:3001';
-console.log('backendURL', backendURL);
 const LOGIN_URL = `${backendURL}/login`;
 const SIGNUP_URL = `${backendURL}/signup`;
 const LOGOUT_URL = `${backendURL}/logout`;
@@ -16,7 +15,7 @@ const initialState = {
   isLoading: true,
   token: localData ? localData.token : '',
   message: '',
-  isLogedin: !!localData,
+  isLogedin: localData.user?.email,
   confirmed: localData ? localData.confirmed : true,
 };
 
@@ -181,10 +180,9 @@ const authSlice = createSlice({
       }))
       .addCase(fetchSignup.fulfilled, (state, { payload }) => {
         const data = {
-          user: { email: payload.email },
+          user: { email: payload.data.email },
           confirmed: payload.data.confirmed,
         };
-
         localStorage.setItem('authData', JSON.stringify(data));
         return ({
           ...state,
@@ -192,7 +190,7 @@ const authSlice = createSlice({
           token: '',
           user: data.user,
           isLogedIn: true,
-          message: 'Successfully Signed up & Logedin',
+          message: 'Successfully Signed up we sent a confirmation link to your email please activate your account using the it!',
           confirmed: payload.data.confirmed,
         });
       })

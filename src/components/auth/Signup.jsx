@@ -21,7 +21,6 @@ const SignUp = (props) => {
   const {
     message, isLogedin,
   } = useSelector((state) => state.auth);
-  console.log('props ===> ', props);
   const handleSubmit = (values, e) => {
     e.preventDefault();
     dispatch(fetchSignup({ name: values.name, email: values.email, password: values.password }));
@@ -29,7 +28,7 @@ const SignUp = (props) => {
   const isDisabled = () => Object.keys(values).length < 4 || Object.keys(errors).length > 0;
 
   useEffect(() => {
-    console.log('message changed here ===> ', message);
+    console.log('message changed here ===> ', message, isLogedin);
   }, [message]);
 
   return (
@@ -50,7 +49,7 @@ const SignUp = (props) => {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          { message && !isLogedin ? <div className="error_message">{message}</div> : <div className="fulfilled_message">{message}</div>}
+          { message && isLogedin ? <div className="fulfilled_message">{message}</div> : <div className="error_message">{message}</div>}
 
         </Box>
         <Box component="form" onSubmit={(e) => handleSubmit(values, e)} sx={{ mt: 1 }}>
@@ -102,7 +101,7 @@ const SignUp = (props) => {
               required
               fullWidth
               id="confirmPassword"
-              label="onfirmPassword"
+              label="confirmPassword"
               name="confirmPassword"
               autoComplete="confirmPassword"
               value={values.confirmPassword}
