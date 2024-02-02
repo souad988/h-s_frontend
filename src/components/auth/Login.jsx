@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import {
@@ -11,6 +12,7 @@ import '../../styles/index.css';
 import { customHandleChange } from './authform';
 
 const Login = (props) => {
+  const navigate = useNavigate();
   const {
     values,
     touched,
@@ -98,14 +100,14 @@ const Login = (props) => {
           </Button>
           <Grid container>
             <Grid item xs="12">
-              <MuiLink href="/resetPassword" variant="body2">
+              <Button onClick={() => navigate('/resetPassword')} variant="body2">
                 Forgot password?
-              </MuiLink>
+              </Button>
             </Grid>
             <Grid item xs="12">
-              <MuiLink href="/signup" variant="body2">
+              <Button onClick={() => navigate('/signup')} variant="body2">
                 Dont have an account? Sign Up
-              </MuiLink>
+              </Button>
             </Grid>
           </Grid>
           { !confirmed && (
