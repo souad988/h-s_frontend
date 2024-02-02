@@ -15,7 +15,7 @@ const initialState = {
   isLoading: true,
   token: localData ? localData.token : '',
   message: '',
-  isLogedin: localData.user?.email,
+  isLogedin: localData?.user?.email,
   confirmed: localData ? localData.confirmed : true,
 };
 
