@@ -4,6 +4,7 @@ import LoginForm from './components/auth/Login';
 import SignUpForm from './components/auth/Signup';
 import ConfirmationError from './components/auth/Confirmation_error';
 import ResetPasswordLink from './components/auth/resetPasswordLink';
+import Home from './views/home';
 
 const App = () => (
   <Router>
@@ -14,7 +15,7 @@ const App = () => (
       <Route path="/confirmation_error/:id" element={<ConfirmationError />} />
       <Route path="/confirmation_success" element={<LoginForm confirmation="confirmation_success" />} />
       <Route path="/confirmation_sent" element={<LoginForm confirmation="confirmation_sent" />} />
-      <Route path="/" element={<LoginForm confirmation="" />} exact />
+      <Route path="/" element={<Home />} exact />
     </Routes>
   </Router>
 );
