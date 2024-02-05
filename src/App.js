@@ -36,6 +36,7 @@ import { ColorModeContext, useMode } from "./theme";
 // import ResetPasswordLink from "./components/auth/resetPasswordLink";
 import Header1 from "./components/header/Header1";
 import Header2 from "./components/header/Header2";
+import Hero from "./components/hero/Hero";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -46,6 +47,7 @@ function App() {
         <CssBaseline />
         <Header1 />
         <Header2 />
+        <Hero />
       </ThemeProvider>
     </ColorModeContext.Provider>
 

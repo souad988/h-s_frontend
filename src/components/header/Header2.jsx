@@ -1,11 +1,10 @@
-import { ExpandMore, ShoppingCartOutlined } from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Badge,
   Container,
   IconButton,
   InputBase,
   Stack,
-  Typography,
   useTheme,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -18,6 +17,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import logo1 from "../../logo1.png";
 
 const Search = styled("div")(({ theme }) => ({
   flexGrow: 0.4,
@@ -94,8 +94,16 @@ const Header2 = () => {
   return (
     <Container sx={{ my: 3, display: "flex", justifyContent: "space-between" }}>
       <Stack alignItems="center">
-        <ShoppingCartOutlined />
-        <Typography variant="body2">E-commerce</Typography>
+        <img
+          src={logo1}
+          alt="logo"
+          style={{
+            display: { xs: "none", md: "flex" },
+            mr: 1,
+            width: "3rem",
+            height: "3rem",
+          }}
+        />
       </Stack>
 
       <Search

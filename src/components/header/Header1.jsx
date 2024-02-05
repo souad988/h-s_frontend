@@ -1,28 +1,23 @@
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react';
 import {
-  Box,
-  Container,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+  Box, Container, IconButton, Stack, useTheme,
+} from '@mui/material';
 import {
   DarkModeOutlined,
   ExpandMore,
   LightModeOutlined,
-} from "@mui/icons-material";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import { ColorModeContext } from "../../theme";
+} from '@mui/icons-material';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { ColorModeContext } from '../../theme';
 
-const options = ["AR", "EN"];
+const options = ['AR', 'EN'];
 
 const Header1 = () => {
   const colorMode = useContext(ColorModeContext);
@@ -46,68 +41,42 @@ const Header1 = () => {
   return (
     <Box
       sx={{
-        bgcolor: "#252b32",
-        py: "4px",
+        bgcolor: '#252b32',
+        py: '4px',
         borderBottomRightRadius: 4,
         borderBottomLeftRadius: 4,
       }}
     >
       <Container>
         <Stack direction="row" alignItems="center">
-          <Typography
-            sx={{
-              mr: 2,
-              p: "4px 10px",
-              bgcolor: "#e17621",
-              borderRadius: "12px",
-              fontSize: "12px",
-              fontWeight: "bold",
-              color: "#fff",
-            }}
-            variant="body2"
-          >
-            Heya
-          </Typography>
-
-          <Typography
-            sx={{
-              fontSize: "12px",
-              fontWeight: 300,
-              color: "#fff",
-            }}
-            variant="body2"
-          >
-            Shipping Worldwide
-          </Typography>
-
           <Box flexGrow={1} />
 
           <div>
-            {theme.palette.mode === "light" ? (
+            {theme.palette.mode === 'light' ? (
               <IconButton
                 onClick={() => {
                   localStorage.setItem(
-                    "mode",
-                    theme.palette.mode === "dark" ? "light" : "dark"
+                    'mode',
+                    theme.palette.mode === 'dark' ? 'light' : 'dark',
                   );
                   colorMode.toggleColorMode();
                 }}
                 color="inherit"
               >
-                <LightModeOutlined sx={{ fontSize: "16px", color: "#fff" }} />
+                <LightModeOutlined sx={{ fontSize: '16px', color: '#fff' }} />
               </IconButton>
             ) : (
               <IconButton
                 onClick={() => {
                   localStorage.setItem(
-                    "mode",
-                    theme.palette.mode === "dark" ? "light" : "dark"
+                    'mode',
+                    theme.palette.mode === 'dark' ? 'light' : 'dark',
                   );
                   colorMode.toggleColorMode();
                 }}
                 color="inherit"
               >
-                <DarkModeOutlined sx={{ fontSize: "16px" }} />
+                <DarkModeOutlined sx={{ fontSize: '16px' }} />
               </IconButton>
             )}
           </div>
@@ -122,17 +91,17 @@ const Header1 = () => {
               aria-haspopup="listbox"
               aria-controls="lock-menu"
               aria-label="when device is locked"
-              aria-expanded={open ? "true" : undefined}
+              aria-expanded={open ? 'true' : undefined}
               onClick={handleClickListItem}
-              sx={{ "&:hover": { cursor: "pointer" }, px: 1 }}
+              sx={{ '&:hover': { cursor: 'pointer' }, px: 1 }}
             >
               <ListItemText
                 sx={{
-                  ".MuiTypography-root": { fontSize: "11px", color: "#fff" },
+                  '.MuiTypography-root': { fontSize: '11px', color: '#fff' },
                 }}
                 secondary={options[selectedIndex]}
               />
-              <ExpandMore sx={{ fontSize: "16px", color: "#fff" }} />
+              <ExpandMore sx={{ fontSize: '16px', color: '#fff' }} />
             </ListItem>
           </List>
 
@@ -142,13 +111,13 @@ const Header1 = () => {
             open={open}
             onClose={handleClose}
             MenuListProps={{
-              "aria-labelledby": "lock-button",
-              role: "listbox",
+              'aria-labelledby': 'lock-button',
+              role: 'listbox',
             }}
           >
             {options.map((option, index) => (
               <MenuItem
-                sx={{ fontSize: "11px", p: "3px 10px", minHeight: "10px" }}
+                sx={{ fontSize: '11px', p: '3px 10px', minHeight: '10px' }}
                 key={option}
                 selected={index === selectedIndex}
                 onClick={(event) => handleMenuItemClick(event, index)}
@@ -160,21 +129,21 @@ const Header1 = () => {
 
           <TwitterIcon
             sx={{
-              fontSize: "16px",
-              color: "#fff",
+              fontSize: '16px',
+              color: '#fff',
             }}
           />
           <FacebookIcon
             sx={{
-              fontSize: "16px",
+              fontSize: '16px',
               mx: 1,
-              color: "#fff",
+              color: '#fff',
             }}
           />
           <InstagramIcon
             sx={{
-              fontSize: "16px",
-              color: "#fff",
+              fontSize: '16px',
+              color: '#fff',
             }}
           />
         </Stack>
