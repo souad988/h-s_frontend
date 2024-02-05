@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../store/product/productSlice';
+import Header1 from '../components/header/Header1';
+import Header2 from '../components/header/Header2';
 
 function Home() {
   const dispatch = useDispatch();
@@ -11,6 +13,8 @@ function Home() {
   };
   return (
     <div>
+      <Header1 />
+      <Header2 />
       <div>Home Page</div>
       <button type="button" onClick={() => handleClick()}>getProducts</button>
     </div>
