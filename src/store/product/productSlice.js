@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const backendURL = 'http://localhost:3001/api';
-const PRODUCTS_URL = `${backendURL}/v1/products`;
+const { REACT_APP_BACKEND_URL } = process.env;
+console.log('env var', REACT_APP_BACKEND_URL);
+const PRODUCTS_URL = `${REACT_APP_BACKEND_URL}/api/v1/products`;
 
 const localData = JSON.parse(localStorage.getItem('productData'));
 

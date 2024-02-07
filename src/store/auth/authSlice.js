@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const backendURL = 'http://localhost:3001';
-const LOGIN_URL = `${backendURL}/login`;
-const SIGNUP_URL = `${backendURL}/signup`;
-const LOGOUT_URL = `${backendURL}/logout`;
-const RESEND_CONFIRMATION_URL = `${backendURL}/confirmation/resend`;
-const RESETPASSWORDLINK_URL = `${backendURL}/resetPassword`;
+const { REACT_APP_BACKEND_URL } = process.env;
+const LOGIN_URL = `${REACT_APP_BACKEND_URL}/login`;
+const SIGNUP_URL = `${REACT_APP_BACKEND_URL}/signup`;
+const LOGOUT_URL = `${REACT_APP_BACKEND_URL}/logout`;
+const RESEND_CONFIRMATION_URL = `${REACT_APP_BACKEND_URL}/confirmation/resend`;
+const RESETPASSWORDLINK_URL = `${REACT_APP_BACKEND_URL}/resetPassword`;
 
 const localData = JSON.parse(localStorage.getItem('authData'));
 
