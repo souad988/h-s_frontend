@@ -111,6 +111,7 @@ const Header2 = () => {
           display: 'flex',
           borderRadius: '22px',
           justifyContent: 'space-between',
+          pl: 1,
         }}
       >
         <SearchIconWrapper>
