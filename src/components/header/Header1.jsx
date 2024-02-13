@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Box, Container, IconButton, Stack, useTheme,
 } from '@mui/material';
@@ -52,36 +52,27 @@ const Header1 = () => {
           <Box flexGrow={1} />
 
           <div>
-            {theme.palette.mode === 'light' ? (
-              <IconButton
-                onClick={() => {
-                  localStorage.setItem(
-                    'mode',
-                    theme.palette.mode === 'dark' ? 'light' : 'dark',
-                  );
-                  colorMode.toggleColorMode();
-                }}
-                color="inherit"
-              >
+            <IconButton
+              data-testid="theme-button"
+              onClick={() => {
+                localStorage.setItem(
+                  'mode',
+                  theme.palette.mode === 'dark' ? 'light' : 'dark',
+                );
+                colorMode.toggleColorMode();
+              }}
+              color="inherit"
+            >
+              {theme.palette.mode === 'light' ? (
                 <LightModeOutlined sx={{ fontSize: '16px', color: '#fff' }} />
-              </IconButton>
-            ) : (
-              <IconButton
-                onClick={() => {
-                  localStorage.setItem(
-                    'mode',
-                    theme.palette.mode === 'dark' ? 'light' : 'dark',
-                  );
-                  colorMode.toggleColorMode();
-                }}
-                color="inherit"
-              >
+              ) : (
                 <DarkModeOutlined sx={{ fontSize: '16px' }} />
-              </IconButton>
-            )}
+              )}
+            </IconButton>
           </div>
 
           <List
+            data-testid="nav-language"
             component="nav"
             aria-label="Device settings"
             sx={{ p: 0, m: 0 }}
@@ -126,13 +117,17 @@ const Header1 = () => {
               </MenuItem>
             ))}
           </Menu>
-
-          <TwitterIcon
-            sx={{
-              fontSize: '16px',
-              color: '#fff',
-            }}
-          />
+          <a
+            data-testid="google-link"
+            href="https://www.google.com/"
+          >
+            <TwitterIcon
+              sx={{
+                fontSize: '16px',
+                color: '#fff',
+              }}
+            />
+          </a>
           <FacebookIcon
             sx={{
               fontSize: '16px',
