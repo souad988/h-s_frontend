@@ -29,10 +29,10 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '266px',
+  width: '277px',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
-    width: '330px',
+    width: 'auto',
   },
 }));
 
@@ -111,6 +111,7 @@ const Header2 = () => {
           display: 'flex',
           borderRadius: '22px',
           justifyContent: 'space-between',
+          pl: 1,
         }}
       >
         <SearchIconWrapper>

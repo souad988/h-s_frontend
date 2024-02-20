@@ -4,6 +4,7 @@ import { fetchProducts } from '../store/product/productSlice';
 import { fetchCategories } from '../store/category/categorySlice';
 import Header1 from '../components/header/Header1';
 import Header2 from '../components/header/Header2';
+import Hero from '../components/hero/Hero';
 import ProductCard from '../components/product/productCard';
 
 function Home() {
@@ -24,7 +25,11 @@ function Home() {
     <div>
       <Header1 />
       <Header2 />
+      <Hero />
       <div>Home Page</div>
+      <button type="button" onClick={() => handleClick()}>
+        getProducts
+      </button>
       <button type="button" aria-label="getProducts" onClick={() => handleClick()}>getProducts</button>
       <button type="button" onClick={() => handleCategoriesClick()}>getCategories</button>
       {products && products.map((product) => (
