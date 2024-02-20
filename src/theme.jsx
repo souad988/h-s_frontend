@@ -13,7 +13,7 @@ export const getDesignTokens = (mode) => ({
         },
 
         text: {
-          primary: '#2B3445',
+          primary: '#e17721',
         },
         neutral: {
           main: '#64748B',
@@ -37,7 +37,7 @@ export const getDesignTokens = (mode) => ({
           main: grey[800],
         },
         text: {
-          primary: '#fff',
+          primary: '#E17621',
         },
       }),
   },
