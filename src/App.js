@@ -6,6 +6,7 @@ import ConfirmationError from './components/auth/Confirmation_error';
 import ResetPasswordLink from './components/auth/resetPasswordLink';
 import Home from './views/home';
 import { ColorModeContext, useMode } from './theme';
+import ProductDetails from './components/product/productDetails';
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -27,6 +28,7 @@ const App = () => {
               path="/confirmation_sent"
               element={<LoginForm confirmation="confirmation_sent" />}
             />
+            <Route path="/productDetails" element={<ProductDetails />} />
             <Route path="/" element={<Home />} exact />
           </Routes>
         </Router>

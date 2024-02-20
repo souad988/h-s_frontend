@@ -117,10 +117,7 @@ const Header1 = () => {
               </MenuItem>
             ))}
           </Menu>
-          <a
-            data-testid="google-link"
-            href="https://www.google.com/"
-          >
+          <a aria-label="twitter" href="https://twitter.com/souadElmansouri" target="_blank" rel="noopener noreferrer">
             <TwitterIcon
               sx={{
                 fontSize: '16px',

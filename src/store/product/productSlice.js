@@ -4,11 +4,11 @@ import axios from 'axios';
 const { REACT_APP_BACKEND_URL } = process.env;
 const PRODUCTS_URL = `${REACT_APP_BACKEND_URL}/api/v1/products`;
 
-const localData = JSON.parse(localStorage.getItem('productData'));
+let localData = JSON.parse(localStorage.getItem('productData'));
 
 const initialState = {
-  products: localData ? localData.products : {},
-  product: {},
+  products: localData ? localData.products : [],
+  product: localData ? localData.product : {},
   isLoading: true,
   message: '',
 };
@@ -61,15 +61,16 @@ const productSlice = createSlice({
         isLoading: true,
       }))
       .addCase(fetchProducts.fulfilled, (state, { payload }) => {
-        const data = {
+        localData = {
+          ...localData,
           products: payload,
         };
 
-        localStorage.setItem('productData', JSON.stringify(data));
+        localStorage.setItem('productData', JSON.stringify(localData));
         return {
           ...state,
           isLoading: false,
-          ...data,
+          ...localData,
         };
       })
       .addCase(fetchProducts.rejected, (state, { payload }) => ({
@@ -83,15 +84,16 @@ const productSlice = createSlice({
         isLoading: true,
       }))
       .addCase(fetchProduct.fulfilled, (state, { payload }) => {
-        const data = {
+        localData = {
+          ...localData,
           product: payload,
         };
 
-        localStorage.setItem('productData', JSON.stringify(data));
+        localStorage.setItem('productData', JSON.stringify(localData));
         return {
           ...state,
           isLoading: false,
-          ...data,
+          ...localData,
         };
       })
       .addCase(fetchProduct.rejected, (state, { payload }) => ({
